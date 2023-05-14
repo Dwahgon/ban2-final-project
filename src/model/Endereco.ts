@@ -55,4 +55,8 @@ export default class Endereco {
     public set telefone(value: string) {
         this._telefone = value;
     }
+
+    static fromJson(json: any): Endereco {
+        return Object.assign(new this(), json);
+    }
 }

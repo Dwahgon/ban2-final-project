@@ -24,7 +24,7 @@
 					<a class="nav-link active" aria-current="page" href="/discs">Discos</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/musics">Musicas</a>
+					<a class="nav-link active" aria-current="page" href="/musics">Músicas</a>
 				</li>
 			</ul>
 			<form class="d-flex" role="search">

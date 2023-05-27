@@ -14,6 +14,9 @@
 >
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item">
+			Nro. de Registro: {instrumento.idInstrumento}
+		</li>
+		<li class="list-group-item">
 			{`Tipo: ${instrumento.tipo}`}
 		</li>
 		<li class="list-group-item">

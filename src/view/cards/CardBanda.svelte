@@ -15,6 +15,9 @@
 >
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item">
+			Código Interno: {banda.idAutor}
+		</li>
+		<li class="list-group-item">
 			Descrição: {banda.descricao}
 		</li>
 		<li class="list-group-item">

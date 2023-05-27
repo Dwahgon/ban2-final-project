@@ -98,6 +98,7 @@
 					class="form-control"
 					id="mNumeroInput"
 					name="mEnderecoNumero"
+					placeholder="200"
 				/>
 			</div>
 			<div class="col-md-9">
@@ -107,31 +108,68 @@
 					class="form-control"
 					id="mComplementoInput"
 					name="mEnderecoComplemento"
+					placeholder="Bloco F"
 				/>
 			</div>
 			<div class="col-md-6">
 				<label for="mRuaInput" class="form-label">Rua</label>
-				<input type="text" class="form-control" id="mRuaInput" name="mEnderecoRua" />
+				<input
+					type="text"
+					class="form-control"
+					id="mRuaInput"
+					name="mEnderecoRua"
+					placeholder="R. Paulo Malschitzki"
+				/>
 			</div>
 			<div class="col-md-6">
 				<label for="mBairroInput" class="form-label">Bairro</label>
-				<input type="text" class="form-control" id="mBairroInput" name="mEnderecoBairro" />
+				<input
+					type="text"
+					class="form-control"
+					id="mBairroInput"
+					name="mEnderecoBairro"
+					placeholder="Zona Industrial Norte"
+				/>
 			</div>
 			<div class="col-md-5">
 				<label for="mCidadeInput" class="form-label">Cidade</label>
-				<input type="text" class="form-control" id="mCidadeInput" name="mEnderecoCidade" />
+				<input
+					type="text"
+					class="form-control"
+					id="mCidadeInput"
+					name="mEnderecoCidade"
+					placeholder="Joinville"
+				/>
 			</div>
 			<div class="col-md-3">
 				<label for="mEstadoInput" class="form-label">UF</label>
-				<input type="text" class="form-control" id="mEstadoInput" name="mEnderecoEstado" />
+				<input
+					type="text"
+					class="form-control"
+					id="mEstadoInput"
+					name="mEnderecoEstado"
+					placeholder="SC"
+				/>
 			</div>
 			<div class="col-md-4">
 				<label for="mPaisInput" class="form-label">País</label>
-				<input type="text" class="form-control" id="mPaisInput" name="mEnderecoPais" />
+				<input
+					type="text"
+					class="form-control"
+					id="mPaisInput"
+					name="mEnderecoPais"
+					placeholder="Brasil"
+				/>
 			</div>
 			<div class="col-md-12">
 				<label for="mTelefoneInput" class="form-label">Telefone</label>
-				<input type="text" class="form-control" id="mTelefoneInput" name="mEnderecoTelefone" />
+				<input
+					type="text"
+					class="form-control"
+					id="mTelefoneInput"
+					name="mEnderecoTelefone"
+					placeholder="(00) 00000-0000"
+				/>
 			</div>
 		</div>
 		<ListField
@@ -144,7 +182,13 @@
 	<div hidden={autorType != 'b'}>
 		<div class="mb-3">
 			<label for="bDescricao" class="form-label">Descrição</label>
-			<input type="textarea" class="form-control" id="bDescricao" name="bDescricao" />
+			<input
+				type="textarea"
+				class="form-control"
+				id="bDescricao"
+				name="bDescricao"
+				placeholder="Conjunto de pessoas que fazem músicas"
+			/>
 		</div>
 		<div class="mb-3">
 			<label for="bDataFormacao" class="form-label">Data Formação</label>

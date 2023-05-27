@@ -3,8 +3,8 @@ import type { IConnectionConfig } from '../types';
 import { DB_USER, DB_PW, DB_HOST, DB_NAME, DB_PORT } from '$env/static/private';
 import fs from 'fs';
 
-const DDLSQL_PATH = 'src/persistence/db-connections/ddlsql.sql';
-const TRIGGSEFUNCS_PATH = 'src/persistence/db-connections/triggsefuncs.sql';
+const DDLSQL_PATH = 'src/persistence/postgres/ddlsql.sql';
+const TRIGGSEFUNCS_PATH = 'src/persistence/postgres/triggsefuncs.sql';
 
 export default class PostgresConnection {
     private static readonly DEFAULT_DB_USER: string = 'postgres';

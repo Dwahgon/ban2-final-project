@@ -1,4 +1,4 @@
-import PostgresConnection from "../db-connections/PostgresConnection";
+import PostgresConnection from "./PostgresConnection";
 import type { IConnectionConfig } from "../types";
 
 export default class PostgresPersistence {

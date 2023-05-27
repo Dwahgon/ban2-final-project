@@ -1,8 +1,8 @@
 import type { Autor } from "../model/Autores";
 import type Instrumento from "../model/Instrumento";
-import PostgresConnection from "../persistence/db-connections/PostgresConnection";
-import PostgresAutorPersistence from "../persistence/postgres-persistence/AutorPersistence";
-import PostgresInstrumentoPersistence from "../persistence/postgres-persistence/InstrumentoPersistence";
+import PostgresConnection from "../persistence/postgres/PostgresConnection";
+import PostgresAutorPersistence from "../persistence/postgres/AutorPersistence";
+import PostgresInstrumentoPersistence from "../persistence/postgres/InstrumentoPersistence";
 
 export default class RecorderController {
     private static _instance: RecorderController;

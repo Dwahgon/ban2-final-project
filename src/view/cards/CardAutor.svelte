@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Banda, type Autor, Musico } from '../../model/Autores';
+	import { Banda, Musico, type Autor } from '../../model/Autores';
 	import CardBanda from './CardBanda.svelte';
 	import CardMusico from './CardMusico.svelte';
 

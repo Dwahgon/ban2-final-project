@@ -1,3 +1,7 @@
+<script lang="ts">
+	import NavItem from './NavItem.svelte';
+</script>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 	<div class="container-fluid">
 		<a class="navbar-brand material-icons" href="/">headphones</a>
@@ -14,26 +18,16 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/authors">Autores</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/instruments">Instrumentos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link disabled" aria-current="page" href="/discs">Discos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link disabled" aria-current="page" href="/musics">Músicas</a>
-				</li>
+				<NavItem pathName="/">Home</NavItem>
+				<NavItem pathName="/authors">Autores</NavItem>
+				<NavItem pathName="/instruments">Instrumentos</NavItem>
+				<NavItem pathName="/discs" disabled={true}>Discos</NavItem>
+				<NavItem pathName="/musics" disabled={true}>Músicas</NavItem>
 			</ul>
-			<form class="d-flex" role="search">
+			<!-- <form class="d-flex" role="search">
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
 				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form>
+			</form> -->
 		</div>
 	</div>
 </nav>

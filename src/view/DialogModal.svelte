@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Modal } from 'bootstrap';
-	import type { BootstrapColors } from '../utils/types';
 	import { onMount } from 'svelte';
+	import type { BootstrapColors } from '../utils/types';
 
 	export let id: string;
 	export let title: string;

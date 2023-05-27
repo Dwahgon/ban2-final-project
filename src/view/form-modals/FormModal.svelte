@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { onMount } from 'svelte';
 	import type { Modal } from 'bootstrap';
-	import { setFormValues } from '../utils/utils';
+	import { onMount } from 'svelte';
+	import { setFormValues } from '../../utils/utils';
 
 	export let id: string;
 	export let title: string;

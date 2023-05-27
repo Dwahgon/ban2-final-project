@@ -23,7 +23,7 @@ export class Autor {
         return typeof obj == 'object' && obj != null && 'idAutor' in obj && obj.idAutor != undefined && obj.idAutor == this.idAutor;
     }
 
-    static fromFormData(formData: FormData, _musicos: Musico[] = []) {
+    static fromFormData(formData: FormData, _musicos: Musico[] = [], _instrumentos: Instrumento[] = []) {
         const idAutor = formData.get('id') ? Number(formData.get('id')) : undefined;
         const autor = new Autor(idAutor);
         autor.nome = String(formData.get('nome') || '');
@@ -43,14 +43,15 @@ export class Autor {
             mEnderecoEstado: '',
             mEnderecoPais: '',
             mEnderecoTelefone: '',
+            mInstrumentos: '',
             bDataFormacao: '',
             bDescricao: '',
             bEstilos: ''
         }
     }
 
-    static fromJson(json: any, musicos: Musico[] = []): Autor {
-        return json._tipo == 'm' ? Musico.fromJson(json) : Banda.fromJson(json, musicos);
+    static fromJson(json: any, musicos: Musico[] = [], instrumentos: Instrumento[]): Autor {
+        return json._tipo == 'm' ? Musico.fromJson(json, musicos, instrumentos) : Banda.fromJson(json, musicos);
     }
 
     static fromPostgresQuery(result: any): Autor {
@@ -98,11 +99,16 @@ export class Musico extends Autor {
         musico.endereco.estado = result.m_endereco_estado;
         musico.endereco.pais = result.m_endereco_pais;
         musico.endereco.telefone = result.m_endereco_telefone;
+        musico.instrumentos = result.instrumentos;
 
         return musico;
     }
 
-    static fromFormData(formData: FormData): Musico {
+    static fromFormData(formData: FormData, _musico: Musico[], instrumentos: Instrumento[]): Musico {
+        const instrumentoIdSet = new Set(String(formData.get('mInstrumentos') || '')
+            .split(',')
+            .filter(v => v != '')
+            .map(v => Number(v)));
         const musico = Object.assign(new this(), super.fromFormData(formData));
         musico.endereco = new Endereco();
         musico.endereco.numero = Number(formData.get('mEnderecoNumero'));
@@ -113,6 +119,7 @@ export class Musico extends Autor {
         musico.endereco.estado = String(formData.get('mEnderecoEstado'));
         musico.endereco.pais = String(formData.get('mEnderecoPais'));
         musico.endereco.telefone = String(formData.get('mEnderecoTelefone'));
+        musico.instrumentos = new Set(instrumentos.filter(i => instrumentoIdSet.has(i.idInstrumento || -1)));
 
         return musico;
     }
@@ -130,6 +137,7 @@ export class Musico extends Autor {
             mEnderecoEstado: this.endereco.estado,
             mEnderecoPais: this.endereco.pais,
             mEnderecoTelefone: this.endereco.telefone,
+            mInstrumentos: Array.from(this.instrumentos).map(i => i.idInstrumento).join(','),
             bDataFormacao: '',
             bDescricao: '',
             bEstilos: ''
@@ -153,11 +161,20 @@ export class Musico extends Autor {
         ]
     }
 
-    static fromJson(json: any): Musico {
+    static fromJson(json: any, _musico: Musico[], instrumentos: Instrumento[]): Musico {
+        const instrumentoIds = new Set(json._instrumentos)
         return Object.assign(new this(), {
             ...json,
-            _endereco: Endereco.fromJson(json._endereco)
+            _endereco: Endereco.fromJson(json._endereco),
+            _instrumentos: new Set(instrumentos.filter(i => instrumentoIds.has(i.idInstrumento)))
         })
+    }
+
+    toJson() {
+        return {
+            ...JSON.parse(JSON.stringify(this)),
+            _instrumentos: Array.from(this.instrumentos).map(i => i.idInstrumento),
+        };
     }
 }
 
@@ -218,6 +235,7 @@ export class Banda extends Autor {
             mEnderecoEstado: '',
             mEnderecoPais: '',
             mEnderecoTelefone: '',
+            mInstrumentos: '',
             bDataFormacao: formatDate(this.dataFormacao, 'YYYY-mm-dd'),
             bDescricao: this.descricao,
             bEstilos: Array.from(this.estilos).join(','),

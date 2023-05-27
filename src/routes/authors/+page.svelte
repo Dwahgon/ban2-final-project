@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Banda, Musico, Autor } from '../../model/Autores';
+	import Instrumento from '../../model/Instrumento';
 	import Alert from '../../view/Alert.svelte';
 	import DialogModal from '../../view/DialogModal.svelte';
 	import FormModal from '../../view/FormModal.svelte';
@@ -14,13 +15,14 @@
 	export let selectedTab: string;
 
 	let autores: Autor[] = [];
+	let instrumentos: Instrumento[] = [];
 	let formModal: FormModal;
 	let autorType: string = 'm';
 	let autorToDelete: Autor | undefined = undefined;
 	let deleteResponse: { success: any; message: any } | undefined = undefined;
 	let deleteAutorModal: DialogModal;
 
-	function updateAutor() {
+	function updateData() {
 		const autoresGroupedByType = data.autores.reduce<Map<'m' | 'b', Autor[]>>(
 			(map, autor) => {
 				map.get(autor._tipo)?.push(autor);
@@ -31,13 +33,16 @@
 				['b', []]
 			])
 		);
-		const musicos = autoresGroupedByType.get('m')?.map((a) => Musico.fromJson(a)) || [];
+		instrumentos = data.instrumentos.map((i) => Instrumento.fromJson(i));
+		const musicos =
+			autoresGroupedByType.get('m')?.map((a) => Musico.fromJson(a, [], instrumentos)) || [];
+		console.log(musicos);
 		const bandas = autoresGroupedByType.get('b')?.map((a) => Banda.fromJson(a, musicos)) || [];
 		autores = [...musicos, ...bandas];
 	}
 
 	$: if (form?.success) formModal.close();
-	$: data.autores, updateAutor();
+	$: data, updateData();
 
 	const DEFAULT_AUTHOR = {
 		nome: '',
@@ -50,6 +55,7 @@
 		mEnderecoEstado: '',
 		mEnderecoPais: '',
 		mEnderecoTelefone: '',
+		mInstrumentos: '',
 		bDataFormacao: '',
 		bDescricao: '',
 		bEstilos: '',
@@ -214,6 +220,12 @@
 				<input type="text" class="form-control" id="mTelefoneInput" name="mEnderecoTelefone" />
 			</div>
 		</div>
+		<ListField
+			name="mInstrumentos"
+			labelText="Instrumentos"
+			inputType="select"
+			idLabelMap={new Map(instrumentos.map((i) => [i.idInstrumento || -1, i.nome]))}
+		/>
 	</div>
 	<div hidden={autorType != 'b'}>
 		<div class="mb-3">

@@ -13,5 +13,10 @@
 				.map(([chave, valor]) => `${toTitleCase(chave.substring(1))}: ${String(valor)}`)
 				.join('<br>')}`}
 		</li>
+		<li class="list-group-item">
+			Instrumentos: {@html Array.from(musico.instrumentos)
+				.map((i) => i.nome)
+				.join(', ') || '<i>Nenhum instrumento</i>'}
+		</li>
 	</ul>
 </CardModel>

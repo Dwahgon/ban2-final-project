@@ -174,15 +174,20 @@ end
 $$ language plpgsql;
 create or replace trigger validate_music_with_autor before update or delete on autor_musicas for each row execute procedure validate_music_with_autor();
 
--- 5 Remover relações quando converte banda para músico
-create or replace function remove_relations_bandas_on_autor_conversion() returns trigger as
+-- 5 Remover relações quando converte banda para músico e vice versa
+create or replace function remove_relations_on_autor_conversion() returns trigger as
 $$
 begin
-	if (OLD.tipo <> NEW.tipo and NEW.tipo='m') then
-		delete from estilos_bandas where id_a=NEW.id_a;
-		delete from membro_banda where banda=NEW.id_a;
+	if (OLD.tipo <> NEW.tipo) then
+		if (NEW.tipo='m') then
+			delete from estilos_bandas where id_a=NEW.id_a;
+			delete from membro_banda where banda=NEW.id_a;
+		elsif (NEW.tipo='b') then
+			delete from instrumento_musico where id_a=NEW.id_a;
+		end if;
 	end if;
 	return new;
 end
 $$ language plpgsql;
-create or replace trigger remove_relations_bandas_on_autor_conversion before update on autores for each row execute procedure remove_relations_bandas_on_autor_conversion();
+create or replace trigger remove_relations_on_autor_conversion before update on autores for each row execute procedure remove_relations_on_autor_conversion();
+

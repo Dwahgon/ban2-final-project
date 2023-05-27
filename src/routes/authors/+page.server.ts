@@ -3,7 +3,8 @@ import RecorderController from "../../controller/RecorderController";
 import { Banda, Musico } from "../../model/Autores";
 
 export const load = async () => ({
-    autores: (await RecorderController.instance.getAllAutores()).map(autor => autor.toJson())
+    autores: (await RecorderController.instance.getAllAutores()).map(autor => autor.toJson()),
+    instrumentos: (await RecorderController.instance.getAllInstrumentos()).map(instrumento => instrumento.toJson())
 })
 
 export const actions = {
@@ -19,7 +20,7 @@ export const actions = {
         try {
             // Insert Autor
             const autor = tipo == 'm' ?
-                Musico.fromFormData(formData)
+                Musico.fromFormData(formData, [], await RecorderController.instance.getAllInstrumentos())
                 : Banda.fromFormData(formData, await RecorderController.instance.getAllMusicos());
             if (autor.idAutor)
                 await RecorderController.instance.updateAutor(autor);

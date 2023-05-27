@@ -1,38 +1,55 @@
-# create-svelte
+# Trabalho Final de BAN2 - Gravadora
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Trabalho final da disciplina de Banco de Dados 2, cujo tema é Gravadora.
 
-## Creating a project
+## Enunciado
 
-If you're seeing this, you've probably already done this step. Congrats!
+A companhia discográfica decidiu criar uma base de dados com informação sobre os seus
+músicos bem como outra informação da companhia. As informações dadas ao projetista foram
+as seguintes:
+- [x] Cada músico tem um nro. de registro, um nome, um endereço e um número de
+telefone. Os músicos em início de carreira muitas vezes partilham um endereço e,
+além disso, assume-se que cada endereço só tem um telefone.
+- [x] Cada músico pode pertencer a uma ou mais bandas.
+- [x] Cada instrumento usado nos estúdios tem um nome (ex. guitarra, bateria, etc.) e um
+código interno.
+- [ ] Cada disco gravado na companhia tem um título, uma data, um formato (ex. CD, MC,
+K7), e um identificador do disco.
+- [ ] Cada música gravada na companhia tem um título e autores.
+- [x] Cada músico pode tocar vários instrumentos, e cada instrumento pode ser tocado por
+vários músicos.
+- [ ] Cada disco pertence a um músico ou a uma banca e tem um certo número de músicas,
+mas cada música pode aparecer em um ou mais discos.
+- [ ] Cada música pode ter a participação de vários músicos ou bandas, e cada músico ou
+banca pode participar em várias músicas.
+- [ ] Cada disco tem um produtor. Os produtores podem produzir vários discos.
 
+## Como rodar o projeto
+
+1. Tenha um servidor PostgreSQL em execução disponível localmente ou externamente.
+    * Comando para iniciar um servidor via Docker:
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
+# Configurações padrões:
+# Usuário: postgres
+# Porta: 5432
+sudo docker run --name nome-do-container-aqui -e POSTGRES_PASSWORD=senha-aqui -d postgres
 
-# create a new project in my-app
-npm create svelte@latest my-app
+# Pegar o endereço IP do container
+sudo docker inspect nome-do-container-aqui | grep IPAddress
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+2. Crie um arquivo `.env` na pasta raiz do projeto contendo as seguintes informações:
+```bash
+DB_USER='usuario-do-bd'
+DB_PW='senha-do-usuario-do-bd'
+DB_HOST='endereco-do-hospedeiro-do-bd'
+DB_PORT='porta-do-bd'
+DB_NAME='nome-do-bd'
+```
+3. Instale as dependências do projeto via `npm`:
+```bash
+npm install
+```
+4. Rode o projeto em modo desenvolvedor:
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

@@ -23,6 +23,7 @@
 				<NavItem pathName="/instruments">Instrumentos</NavItem>
 				<NavItem pathName="/discs" disabled={true}>Discos</NavItem>
 				<NavItem pathName="/musics" disabled={true}>Músicas</NavItem>
+				<NavItem pathName="/documentation">Documentação</NavItem>
 			</ul>
 			<!-- <form class="d-flex" role="search">
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

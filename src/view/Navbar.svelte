@@ -21,6 +21,9 @@
 					<a class="nav-link active" aria-current="page" href="/authors">Autores</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="/instruments">Instrumentos</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link disabled" aria-current="page" href="/discs">Discos</a>
 				</li>
 				<li class="nav-item">

@@ -1,6 +1,5 @@
 import { Autor, Banda, Musico } from "../../model/Autores";
-import PostgresConnection from "../db-connections/PostgresConnection";
-import type { IConnectionConfig } from "../types";
+import PostgresPersistance from "./PostgresPersistance";
 
 type IEstiloBanda = {
     id_a: number,
@@ -20,23 +19,7 @@ const DELETE_MEMBRO_BANDA_SQL = 'delete from membro_banda where banda=$1 and mus
 const UPDATE_SQL = 'update autores set nome=$1, tipo=$2, m_endereco_numero=$3, m_endereco_complemento=$4, m_endereco_rua=$5, m_endereco_bairro=$6, m_endereco_cidade=$7, m_endereco_estado=$8, m_endereco_pais=$9, m_endereco_telefone=$10, b_data_formacao=$11, b_descricao=$12 where id_a=$13';
 const DELETE_SQL = 'delete from autores where id_a=$1';
 
-export default class PostgresAutorPersistance {
-    private dbConfig: IConnectionConfig;
-
-    constructor(dbConfig: IConnectionConfig) {
-        this.dbConfig = dbConfig;
-    }
-
-    private async query(query: string, queryArgs: unknown[] = []) {
-        const pgdb = new PostgresConnection();
-        await pgdb.connect(this.dbConfig);
-        try {
-            return await pgdb.query(query, queryArgs);
-        } finally {
-            await pgdb.disconnect();
-        }
-    }
-
+export default class PostgresAutorPersistance extends PostgresPersistance {
     private queryResultToMusico(queryResult: unknown[]) {
         return queryResult
             .map((result: unknown) => Musico.fromPostgresQuery(result));

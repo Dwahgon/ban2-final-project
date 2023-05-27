@@ -1,7 +1,7 @@
 import PostgresConnection from "../db-connections/PostgresConnection";
 import type { IConnectionConfig } from "../types";
 
-export default class PostgresPersistance {
+export default class PostgresPersistence {
     private dbConfig: IConnectionConfig;
 
     constructor(dbConfig: IConnectionConfig) {

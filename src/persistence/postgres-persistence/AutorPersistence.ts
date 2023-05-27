@@ -1,6 +1,6 @@
 import { Autor, Banda, Musico } from "../../model/Autores";
 import Instrumento, { type InstrumentoPostgresEntry } from "../../model/Instrumento";
-import PostgresPersistance from "./PostgresPersistance";
+import PostgresPersistence from "./PostgresPersistence";
 
 type IEstiloBanda = {
     id_a: number,
@@ -24,7 +24,7 @@ const DELETE_INSTRUMENTO_MUSICO_SQL = 'delete from instrumento_musico where id_a
 const UPDATE_SQL = 'update autores set nome=$1, tipo=$2, m_endereco_numero=$3, m_endereco_complemento=$4, m_endereco_rua=$5, m_endereco_bairro=$6, m_endereco_cidade=$7, m_endereco_estado=$8, m_endereco_pais=$9, m_endereco_telefone=$10, b_data_formacao=$11, b_descricao=$12 where id_a=$13';
 const DELETE_SQL = 'delete from autores where id_a=$1';
 
-export default class PostgresAutorPersistance extends PostgresPersistance {
+export default class PostgresAutorPersistence extends PostgresPersistence {
     private queryResultToMusico(queryResult: unknown[], instrumentosMusico: Map<number, Instrumento[]>) {
         return queryResult
             .map(result => {

@@ -1,18 +1,18 @@
 import type { Autor } from "../model/Autores";
 import type Instrumento from "../model/Instrumento";
 import PostgresConnection from "../persistence/db-connections/PostgresConnection";
-import PostgresAutorPersistance from "../persistence/postgres-persistance/AutorPersistance";
-import PostgresInstrumentoPersistance from "../persistence/postgres-persistance/InstrumentoPersistance";
+import PostgresAutorPersistence from "../persistence/postgres-persistence/AutorPersistence";
+import PostgresInstrumentoPersistence from "../persistence/postgres-persistence/InstrumentoPersistence";
 
 export default class RecorderController {
     private static _instance: RecorderController;
-    private autorPersistance: PostgresAutorPersistance;
-    private instrumentoPersistance: PostgresInstrumentoPersistance;
+    private autorPersistence: PostgresAutorPersistence;
+    private instrumentoPersistence: PostgresInstrumentoPersistence;
 
     private constructor() {
         const config = PostgresConnection.getConnectionConfigFromEnv();
-        this.autorPersistance = new PostgresAutorPersistance(config);
-        this.instrumentoPersistance = new PostgresInstrumentoPersistance(config);
+        this.autorPersistence = new PostgresAutorPersistence(config);
+        this.instrumentoPersistence = new PostgresInstrumentoPersistence(config);
     }
 
     static get instance() {
@@ -20,42 +20,42 @@ export default class RecorderController {
     }
 
     async getAllAutores() {
-        return await this.autorPersistance.getAll();
+        return await this.autorPersistence.getAll();
     }
 
     async getAllMusicos() {
-        return await this.autorPersistance.getAllMusicos();
+        return await this.autorPersistence.getAllMusicos();
     }
 
     async getAllBandas() {
-        return await this.autorPersistance.getAllBandas();
+        return await this.autorPersistence.getAllBandas();
     }
 
     async insertAutor(autor: Autor) {
-        await this.autorPersistance.insertAutor(autor);
+        await this.autorPersistence.insertAutor(autor);
     }
 
     async updateAutor(autor: Autor) {
-        await this.autorPersistance.updateAutor(autor);
+        await this.autorPersistence.updateAutor(autor);
     }
 
     async deleteAutor(id: number) {
-        await this.autorPersistance.deleteAutor(id);
+        await this.autorPersistence.deleteAutor(id);
     }
 
     async getAllInstrumentos() {
-        return await this.instrumentoPersistance.getAll();
+        return await this.instrumentoPersistence.getAll();
     }
 
     async insertIntrumento(instrumento: Instrumento) {
-        await this.instrumentoPersistance.insert(instrumento);
+        await this.instrumentoPersistence.insert(instrumento);
     }
 
     async updateInstrumento(instrumento: Instrumento) {
-        await this.instrumentoPersistance.update(instrumento);
+        await this.instrumentoPersistence.update(instrumento);
     }
 
     async deleteInstrumento(id: number) {
-        await this.instrumentoPersistance.delete(id);
+        await this.instrumentoPersistence.delete(id);
     }
 }

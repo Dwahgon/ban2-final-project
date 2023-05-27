@@ -1,7 +1,8 @@
 import { error, json } from '@sveltejs/kit';
 import RecorderController from '../../../controller/RecorderController.js';
+import type { RequestHandler } from './$types.js';
 
-export async function DELETE({ params }): Promise<Response> {
+export const DELETE = (async ({ params }): Promise<Response> => {
     console.log('deleted');
     const id = params.slug;
     try {
@@ -12,4 +13,4 @@ export async function DELETE({ params }): Promise<Response> {
         });
     }
     return json({ success: true });
-}
+}) satisfies RequestHandler;

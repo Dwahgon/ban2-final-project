@@ -1,4 +1,4 @@
-import { fail } from "@sveltejs/kit";
+import { fail, type Actions } from "@sveltejs/kit";
 import RecorderController from "../../controller/RecorderController";
 import { Banda, Musico } from "../../model/Autores";
 
@@ -16,10 +16,11 @@ export const actions = {
         if (tipo == '') return fail(400, { tipo, missing: true });
         if (tipo != 'm' && tipo != 'b') return fail(400, { tipo, invalid: true });
 
-
         try {
             // Insert Autor
-            const autor = String(tipo) == 'm' ? Musico.fromFormData(formData) : Banda.fromFormData(formData, await RecorderController.instance.getAllMusicos());
+            const autor = tipo == 'm' ?
+                Musico.fromFormData(formData)
+                : Banda.fromFormData(formData, await RecorderController.instance.getAllMusicos());
             if (autor.idAutor)
                 await RecorderController.instance.updateAutor(autor);
             else
@@ -28,6 +29,5 @@ export const actions = {
         } catch (error) {
             return fail(400, { error: (error as Error).message });
         }
-
     }
-}
+} satisfies Actions;

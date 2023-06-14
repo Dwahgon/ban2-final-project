@@ -1,18 +1,25 @@
 import type { Autor } from "../model/Autores";
 import type Instrumento from "../model/Instrumento";
-import PostgresConnection from "../persistence/postgres/PostgresConnection";
-import PostgresAutorPersistence from "../persistence/postgres/AutorPersistence";
-import PostgresInstrumentoPersistence from "../persistence/postgres/InstrumentoPersistence";
+// import PostgresConnection from "../persistence/postgres/PostgresConnection";
+// import PostgresAutorPersistence from "../persistence/postgres/AutorPersistence";
+// import PostgresInstrumentoPersistence from "../persistence/postgres/InstrumentoPersistence";
+import MongoAutorPersistence from "../persistence/mongodb/AutorPersisence";
+import MongoInstrumentoPersistence from "../persistence/mongodb/InstrumentoPersistence";
+import MongodbConnection from "../persistence/mongodb/MongodbConnection";
 
 export default class RecorderController {
     private static _instance: RecorderController;
-    private autorPersistence: PostgresAutorPersistence;
-    private instrumentoPersistence: PostgresInstrumentoPersistence;
+    // private autorPersistence: PostgresAutorPersistence;
+    // private instrumentoPersistence: PostgresInstrumentoPersistence;
+    private autorPersistence: MongoAutorPersistence;
+    private instrumentoPersistence: MongoInstrumentoPersistence;
 
     private constructor() {
-        const config = PostgresConnection.getConnectionConfigFromEnv();
-        this.autorPersistence = new PostgresAutorPersistence(config);
-        this.instrumentoPersistence = new PostgresInstrumentoPersistence(config);
+        const config = MongodbConnection.getConnectionConfigFromEnv();
+        // this.autorPersistence = new PostgresAutorPersistence(config);
+        // this.instrumentoPersistence = new PostgresInstrumentoPersistence(config);
+        this.autorPersistence = new MongoAutorPersistence(config);
+        this.instrumentoPersistence = new MongoInstrumentoPersistence(config);
     }
 
     static get instance() {
@@ -48,14 +55,14 @@ export default class RecorderController {
     }
 
     async insertIntrumento(instrumento: Instrumento) {
-        await this.instrumentoPersistence.insert(instrumento);
+        await this.instrumentoPersistence.insertInstrumento(instrumento);
     }
 
     async updateInstrumento(instrumento: Instrumento) {
-        await this.instrumentoPersistence.update(instrumento);
+        await this.instrumentoPersistence.updateInstrumento(instrumento);
     }
 
     async deleteInstrumento(id: number) {
-        await this.instrumentoPersistence.delete(id);
+        await this.instrumentoPersistence.deleteInstrumento(id);
     }
 }

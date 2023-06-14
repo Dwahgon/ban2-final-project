@@ -26,6 +26,8 @@ banca pode participar em várias músicas.
 
 ## Como rodar o projeto
 
+### Versão Postgres
+
 1. Tenha um servidor PostgreSQL em execução disponível localmente ou externamente.
     * Comando para iniciar um servidor via Docker:
 ```bash
@@ -39,6 +41,30 @@ sudo docker inspect nome-do-container-aqui | grep IPAddress
 ```
 2. Crie um arquivo `.env` na pasta raiz do projeto contendo as seguintes informações:
 ```bash
+DB_USER='usuario-do-bd'
+DB_PW='senha-do-usuario-do-bd'
+DB_HOST='endereco-do-hospedeiro-do-bd'
+DB_PORT='porta-do-bd'
+DB_NAME='nome-do-bd'
+```
+3. Instale as dependências do projeto via `npm`:
+```bash
+npm install
+```
+4. Rode o projeto em modo desenvolvedor:
+```bash
+npm run dev
+```
+
+### Versão MongoDb
+1. Tenha um servidor PostgreSQL em execução disponível localmente ou externamente.
+    * Comando para iniciar um servidor via Docker:
+```bash
+sudo docker run --name nome-do-container-aqui -p 27017:27017 -d mongo
+```
+2. Crie um arquivo `.env` na pasta raiz do projeto contendo as seguintes informações:
+```bash
+# Deixe DB_USER e DB_PW vazios quando rodar o mongodb por meio do comando acima
 DB_USER='usuario-do-bd'
 DB_PW='senha-do-usuario-do-bd'
 DB_HOST='endereco-do-hospedeiro-do-bd'

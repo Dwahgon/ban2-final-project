@@ -1,6 +1,7 @@
 import { formatDate } from "../utils/utils";
 import Endereco from "./Endereco";
 import type Instrumento from "./Instrumento";
+import { convertMongoIdToDecimal } from "./util";
 
 export class Autor {
     private _idAutor?: number;
@@ -163,6 +164,10 @@ export class Musico extends Autor {
 
     static fromJson(json: any, _musico: Musico[], instrumentos: Instrumento[]): Musico {
         const instrumentoIds = new Set(json._instrumentos)
+        if ('_id' in json) {
+            json._idAutor = convertMongoIdToDecimal(json._id)
+            delete json._id;
+        }
         return Object.assign(new this(), {
             ...json,
             _endereco: Endereco.fromJson(json._endereco),
@@ -264,8 +269,12 @@ export class Banda extends Autor {
         ]
     }
 
-    static fromJson(json: any, musicos: Musico[]): Autor {
+    static fromJson(json: any, musicos: Musico[]): Banda {
         const membroIds = new Set(json._membros)
+        if ('_id' in json) {
+            json._idAutor = convertMongoIdToDecimal(json._id)
+            delete json._id;
+        }
         return Object.assign(new this(), {
             ...json,
             _dataFormacao: new Date(json._dataFormacao),

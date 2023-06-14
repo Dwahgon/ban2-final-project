@@ -1,3 +1,5 @@
+import { convertMongoIdToDecimal } from "./util";
+
 export type InstrumentoPostgresEntry = {
     id_i: number,
     nome: string,
@@ -56,7 +58,11 @@ export default class Instrumento {
         ]
     }
 
-    static fromJson(json: unknown) {
+    static fromJson(json: any) {
+        if ('_id' in json) {
+            json._idInstrumento = convertMongoIdToDecimal(json._id)
+            delete json._id;
+        }
         return Object.assign(new this(), json);
     }
 

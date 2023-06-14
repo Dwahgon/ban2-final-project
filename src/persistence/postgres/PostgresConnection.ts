@@ -33,7 +33,7 @@ export default class PostgresConnection {
         const ddlSql = fs.readFileSync(DDLSQL_PATH).toString();
         const triggsFuncsSql = fs.readFileSync(TRIGGSEFUNCS_PATH).toString();
         const createDatabasePool = new Pool({
-            connectionString: `postgres://${config.user}:${config.password}@${config.host}:${config.port}/${config.database}`
+            connectionString: this.generateConnectionString(config)
         });
         const createDatabaseClient = await createDatabasePool.connect();
         await createDatabaseClient.query(ddlSql);
@@ -43,16 +43,20 @@ export default class PostgresConnection {
 
     private async createDatabase(config: IConnectionConfig) {
         const databaselessPool = new Pool({
-            connectionString: `postgres://${config.user}:${config.password}@${config.host}:${config.port}`
+            connectionString: this.generateConnectionString(config, false)
         });
         const databaselessClient = await databaselessPool.connect();
         await databaselessClient.query(`create database "${config.database}" with owner=${config.user} encoding=UTF8 LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0`);
         databaselessClient.release();
     }
 
+    private generateConnectionString(config: IConnectionConfig, withDatabase = true) {
+        return `postgres://${config.user}:${config.password}@${config.host}:${config.port}${withDatabase ? `/${config.database}` : ''}`;
+    }
+
     async connect(config: IConnectionConfig) {
         const pool = new Pool({
-            connectionString: `postgres://${config.user}:${config.password}@${config.host}:${config.port}/${config.database}`
+            connectionString: this.generateConnectionString(config)
         });
         try {
             this.client = await pool.connect()

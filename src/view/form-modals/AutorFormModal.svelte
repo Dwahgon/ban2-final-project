@@ -9,6 +9,7 @@
 	export let instrumentos: Instrumento[];
 	export let autores: Autor[];
 	export let formActionData: ActionData;
+	let editingId: number = -1;
 
 	$: if (formActionData?.success) formModal.close();
 
@@ -34,11 +35,13 @@
 	let autorType: 'm' | 'b' = 'm';
 
 	export function promptEditAutor(autor: Autor) {
+		editingId = autor.idAutor || -1;
 		autorType = autor instanceof Musico ? 'm' : 'b';
 		formModal.promptEdit(autor.toFormData());
 	}
 
 	export function promptInsert() {
+		editingId = -1;
 		formModal.promptInsert();
 		autorType = DEFAULT_AUTHOR.tipo as 'm' | 'b';
 	}
@@ -200,7 +203,9 @@
 			labelText="Membros"
 			inputType="select"
 			idLabelMap={new Map(
-				autores.filter((a) => a instanceof Musico).map((a) => [a.idAutor || -1, a.nome])
+				autores
+					.filter((a) => a instanceof Musico && a.idAutor != editingId)
+					.map((a) => [a.idAutor || -1, a.nome])
 			)}
 		/>
 	</div>

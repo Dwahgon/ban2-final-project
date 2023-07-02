@@ -1,4 +1,4 @@
-import { type Filter, type Document, type OptionalId, ObjectId, type WithoutId } from "mongodb";
+import { type Filter, type Document, type OptionalId, ObjectId, type WithoutId, type UpdateFilter } from "mongodb";
 import type { IConnectionConfig } from "../types";
 import MongodbConnection from "./MongodbConnection";
 
@@ -71,6 +71,16 @@ export default class MongoPersistence {
         try {
             await mongodb.connect(this.dbConfig);
             return await mongodb.replace(this.getCollection(), filter, doc);
+        } finally {
+            await mongodb.disconnect();
+        }
+    }
+
+    protected async updateMany(filter: Filter<Document>, update: UpdateFilter<Document>) {
+        const mongodb = new MongodbConnection();
+        try {
+            await mongodb.connect(this.dbConfig);
+            return await mongodb.updateMany(this.getCollection(), filter, update);
         } finally {
             await mongodb.disconnect();
         }

@@ -86,6 +86,14 @@ export default class MongoAutorPersistence extends MongoPersistence {
         }
     }
 
+    async removeIdFromBandaMembers(id: number) {
+        await this.updateMany({ _tipo: 'b' }, { $pull: { _membros: this.convertDecimalToMongoId(id) } });
+    }
+
+    async removeIdFromMusicoInstrumentos(id: number) {
+        await this.updateMany({ _tipo: 'm' }, { $pull: { _instrumentos: this.convertDecimalToMongoId(id) } });
+    }
+
     async insertAutor(autor: Autor): Promise<void> {
         await this.insert({
             _id: this.generateId(),
@@ -99,5 +107,6 @@ export default class MongoAutorPersistence extends MongoPersistence {
 
     async deleteAutor(id: number): Promise<void> {
         await this.delete({ "_id": this.convertDecimalToMongoId(id) });
+        await this.removeIdFromBandaMembers(id);
     }
 }

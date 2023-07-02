@@ -64,5 +64,6 @@ export default class RecorderController {
 
     async deleteInstrumento(id: number) {
         await this.instrumentoPersistence.deleteInstrumento(id);
+        await this.autorPersistence.removeIdFromMusicoInstrumentos(id);
     }
 }

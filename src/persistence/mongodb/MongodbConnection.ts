@@ -1,4 +1,4 @@
-import { MongoClient, type Filter, type Document, type OptionalId, type WithoutId } from 'mongodb';
+import { MongoClient, type Filter, type Document, type OptionalId, type WithoutId, type UpdateFilter } from 'mongodb';
 import type { IConnectionConfig } from '../types';
 import { DB_USER, DB_PW, DB_HOST, DB_NAME, DB_PORT } from '$env/static/private';
 
@@ -58,6 +58,11 @@ export default class MongodbConnection {
     async insertOne(collection: string, doc: OptionalId<Document>) {
         if (!this.client) throw Error('Not connected');
         return (await this.db()?.collection(collection).insertOne(doc))?.insertedId;
+    }
+
+    async updateMany(collection: string, filter: Filter<Document>, update: UpdateFilter<Document>) {
+        if (!this.client) throw Error('Not connected');
+        return (await this.db()?.collection(collection).updateMany(filter, update))
     }
 
     async delete(collection: string, doc: Filter<Document>) {
